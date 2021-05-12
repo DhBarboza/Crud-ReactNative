@@ -3,7 +3,7 @@ import { View, Button, TextInput, ScrollView, StyleSheet } from 'react-native';
 import firebase from '../database/firebase';
 
 
-const CreateItem = () => {
+const CreateItem = (props) => {
     // Criar um estado:
     const [state, setState] = useState({
         title: '',
@@ -11,15 +11,21 @@ const CreateItem = () => {
         description: ''
     });
 
-    const createNewAnotation = () => {
+    const createNewAnotation = async () => {
         if(state.title === '') {
-            alert('Adicione um título para descrição')
+            alert('Adicione um título para identificação')
         } else {
-            firebase.db.collection('anotations').add({
-                title: state.title,
-                name: state.name,
-                description: state.description,
-            })
+            try {
+                await firebase.db.collection('anotations').add({
+                    title: state.title,
+                    name: state.name,
+                    description: state.description,
+                })
+                props.navigation.navigate('Lista de Items');
+
+            } catch (error) {
+                console.log(error);
+            }
         }
     }
 
@@ -27,6 +33,7 @@ const CreateItem = () => {
     const changeText = (name, value) => {
         setState({ ...state, [name]: value})
     }
+
     return (
         <ScrollView style={styles.container}>
             <View style={styles.inputGroup}>
