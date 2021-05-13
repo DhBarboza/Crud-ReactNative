@@ -1,11 +1,12 @@
 import React, { useEffect, useState} from 'react'
-import { Text, View } from 'react-native';
+import { Button, ScrollView, Text, View } from 'react-native';
 import firebase from '../database/firebase';
+import { ListItem, Avatar } from 'react-native-elements';
 
 
-const ItemsList = () => {
+const ItemsList = (props) => {
 
-    const [items, setState] = useState([])
+    const [items, setItems] = useState([])
 
     useEffect(() => {
         firebase.db.collection('anotations').onSnapshot(querySnapshot => {
@@ -23,14 +24,38 @@ const ItemsList = () => {
                     name,
                     description
                 })
-            })
+            });
+
+            //Guardar o estado:
+            setItems(items)
         })
     }, [])
 
     return (
-        <View>
-            <Text>Lista de Items</Text>
-        </View>
+        <ScrollView>
+            <Button title="Nova Anotação" onPress={() => props.navigation.navigate('CreateItem')}/>
+
+            {
+                items.map(item => {
+                    return(
+                        <ListItem key={item.id}>
+                            <ListItem.Chevron/>
+                            <Avatar 
+                                source={{
+                                    uri: 
+                                        'https://reactnativeelements.com/img/avatar/avatar--icon.jpg',
+                                }}
+                                rounded
+                            />
+                            <ListItem.Content>
+                                <ListItem.Title>{item.title}</ListItem.Title>
+                                <ListItem.Subtitle>{item.name}</ListItem.Subtitle>
+                            </ListItem.Content>
+                        </ListItem>
+                    )
+                })
+            }
+        </ScrollView>
     )
 }
 
