@@ -9,8 +9,20 @@ const ItemsList = () => {
 
     useEffect(() => {
         firebase.db.collection('anotations').onSnapshot(querySnapshot => {
+
+            // Lista de Items:
+            const items = [];
+
             querySnapshot.docs.forEach(doc => {
-                console.log(doc.data)
+
+                // Constante que recebe documentos:
+                const { title, name, description} = doc.data()
+                items.push({
+                    id: doc.id,
+                    title,
+                    name,
+                    description
+                })
             })
         })
     }, [])

@@ -21,7 +21,7 @@ const CreateItem = (props) => {
                     name: state.name,
                     description: state.description,
                 })
-                props.navigation.navigate('Lista de Items');
+                props.navigation.navigate('ItemsList');
 
             } catch (error) {
                 console.log(error);

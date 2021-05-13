@@ -13,7 +13,7 @@ function MyStack () {
   return (
     <Stack.Navigator>
       <Stack.Screen name="Novo Item" component={CreateItem}/>
-      <Stack.Screen name="Lista de Items" component={ItemsList}/>
+      <Stack.Screen name="ItemsList" component={ItemsList}/>
       <Stack.Screen name="Detalhes do Item" component={ItemDetail}/>
     </Stack.Navigator>
   );
