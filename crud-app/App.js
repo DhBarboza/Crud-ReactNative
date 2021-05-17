@@ -12,9 +12,9 @@ const Stack = createStackNavigator();
 function MyStack () {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="ItemsList" component={ItemsList}/>
-      <Stack.Screen name="CreateItem" component={CreateItem}/>
-      <Stack.Screen name="Detalhes do Item" component={ItemDetail}/>
+      <Stack.Screen name="ItemsList" component={ItemsList} options={{title: 'Anotações'}}/>
+      <Stack.Screen name="CreateItem" component={CreateItem} options={{title: 'Nova Anotação'}}/>
+      <Stack.Screen name="ItemDetail" component={ItemDetail} options={{title: 'Detalhes'}}/>
     </Stack.Navigator>
   );
 }

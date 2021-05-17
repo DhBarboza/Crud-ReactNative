@@ -6,7 +6,7 @@ import { ListItem, Avatar } from 'react-native-elements';
 
 const ItemsList = (props) => {
 
-    const [items, setItems] = useState([])
+    const [items, setItems] = useState([]);
 
     useEffect(() => {
         firebase.db.collection('anotations').onSnapshot(querySnapshot => {
@@ -38,7 +38,11 @@ const ItemsList = (props) => {
             {
                 items.map(item => {
                     return(
-                        <ListItem key={item.id}>
+                        <ListItem key={item.id} bottomDivider onPress={() => {
+                            props.navigation.navigate('ItemDetail', {
+                                itemId: item.id
+                            })
+                        }}>
                             <ListItem.Chevron/>
                             <Avatar 
                                 source={{
