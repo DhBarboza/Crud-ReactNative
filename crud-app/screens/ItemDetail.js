@@ -4,34 +4,35 @@ import firebase from '../database/firebase';
 
 const ItemDetail = (props) => {
 
-    const [itemobj, setItemobj] = useState({
+    const [state, setState] = useState({
         id: '',
         title: '',
         name: '',
         description: ''
-    })
+    });
 
     const [loading, setLoading] = useState(true)
-
-    const getItemById = async(id) => {
-        const dbRef = firebase.db.collection('anotations').doc(id);
-        const dbDoc = await dbRef.get();
-        const item = dbDoc.data();
-        console.log(item)
-        setItemobj({
-            ...itemobj,
-            id: dbDoc.id,
-        })
-        setLoading(false)
-    }
 
     //Obter o item a partir do ItemId passa na outra tela:
     useEffect(() => {
         getItemById(props.route.params.itemId);
     },[]);
 
+    const getItemById = async (id) => {
+        const dbRef = firebase.db.collection('anotations').doc(id);
+        const doc = await dbRef.get();
+        const itemobj = doc.data();
+        console.log(itemobj)
+        setState({
+            ...state,
+            id: doc.id,
+        })
+        setLoading(false)
+    }
+
+
     const changeText = (name, value) => {
-        setItemobj({ ...itemobj, [name]: value})
+        setState({ ...state, [name]: value})
     }
 
     const deleteItem = async () => {
@@ -59,16 +60,16 @@ const ItemDetail = (props) => {
     return (
         <ScrollView style={styles.container}>
         <View style={styles.inputGroup}>
-            <TextInput value={itemobj.title} placeholder="Título da Anotação" onChangeText={(value) => changeText('title', value)}/>
+            <TextInput placeholder="Título da Anotação" value={state.title} onChangeText={(value) => changeText('title', value)}/>
         </View>
         <View style={styles.inputGroup}>
-            <TextInput value={itemobj.name} placeholder="Nome do País" onChangeText={(value) => changeText('name', value)}/>
+            <TextInput placeholder="Nome do País" value={state.name} onChangeText={(value) => changeText('name', value)}/>
         </View>
         <View style={styles.inputGroup}>
-            <TextInput value={itemobj.description} placeholder="Descrição" onChangeText={(value) => changeText('description', value)}/>
+            <TextInput placeholder="Descrição" value={state.description} onChangeText={(value) => changeText('description', value)}/>
         </View>
         <View>
-            <Button color="#19AC52" title="Atualizar" onPress={() => alert('Datalhes')}/>
+            <Button color="#19AC52" title="Atualizar" onPress={() => alert('Item Atualizado')}/>
         </View>
         <View>
             <Button color="#E31030" title="Deletar" onPress={() => openConfirmationAlert()}/>

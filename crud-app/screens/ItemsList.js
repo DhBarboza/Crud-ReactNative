@@ -6,11 +6,10 @@ import { ListItem, Avatar } from 'react-native-elements';
 
 const ItemsList = (props) => {
 
-    const [items, setItems] = useState([]);
+    const [state, setState] = useState([]);
 
     useEffect(() => {
         firebase.db.collection('anotations').onSnapshot(querySnapshot => {
-
             // Lista de Items:
             const items = [];
 
@@ -27,7 +26,7 @@ const ItemsList = (props) => {
             });
 
             //Guardar o estado:
-            setItems(items)
+            setState(items)
         })
     }, [])
 
@@ -36,7 +35,7 @@ const ItemsList = (props) => {
             <Button title="Nova Anotação" onPress={() => props.navigation.navigate('CreateItem')}/>
 
             {
-                items.map(item => {
+                state.map(item => {
                     return(
                         <ListItem key={item.id} bottomDivider onPress={() => {
                             props.navigation.navigate('ItemDetail', {
