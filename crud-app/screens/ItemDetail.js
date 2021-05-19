@@ -21,8 +21,8 @@ const ItemDetail = (props) => {
     const getItemById = async (id) => {
         const dbRef = firebase.db.collection('anotations').doc(id);
         const doc = await dbRef.get();
-        const itemobj = doc.data();
-        console.log(itemobj)
+        const item = doc.data();
+        console.log(item)
         setState({
             ...state,
             id: doc.id,
