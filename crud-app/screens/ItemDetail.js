@@ -43,7 +43,7 @@ const ItemDetail = (props) => {
     const openConfirmationAlert = () => {
         Alert.alert('Remover Anotação', 'Tem certeza que deseja excluir?', [
             {text: 'Sim', onPress: () => deleteItem()},
-            {text: 'Não', onPress: () => console.log('Cancelado')},
+            {text: 'Não', onPress: () => console.log(false)},
 
         ])
     }
@@ -71,7 +71,7 @@ const ItemDetail = (props) => {
             <Button color="#19AC52" title="Atualizar" onPress={() => alert('Datalhes')}/>
         </View>
         <View>
-            <Button color="#E31030" title="Deletar" onPress={() => deleteItem()}/>
+            <Button color="#E31030" title="Deletar" onPress={() => openConfirmationAlert()}/>
         </View>
     </ScrollView>
     )
