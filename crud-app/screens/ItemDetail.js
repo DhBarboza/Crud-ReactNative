@@ -4,7 +4,7 @@ import firebase from '../database/firebase';
 
 const ItemDetail = (props) => {
 
-    const [state, setState] = useState({
+    const [anotation, setAnotation] = useState({
         id: '',
         title: '',
         name: '',
@@ -23,16 +23,19 @@ const ItemDetail = (props) => {
         const doc = await dbRef.get();
         const item = doc.data();
         console.log(item)
-        setState({
-            ...state,
+        setAnotation({
+            ...anotation,
             id: doc.id,
+            title: item.title,
+            name: item.name,
+            description: item.description
         })
         setLoading(false)
     }
 
 
-    const changeText = (name, value) => {
-        setState({ ...state, [name]: value})
+    const changeText = (item, value) => {
+        setAnotation({ ...anotation, [item]: value})
     }
 
     const deleteItem = async () => {
@@ -60,16 +63,16 @@ const ItemDetail = (props) => {
     return (
         <ScrollView style={styles.container}>
         <View style={styles.inputGroup}>
-            <TextInput placeholder="Título da Anotação" value={state.title} onChangeText={(value) => changeText('title', value)}/>
+            <TextInput placeholder="Título da Anotação" value={anotation.title} onChangeText={(value) => changeText('title', value)}/>
         </View>
         <View style={styles.inputGroup}>
-            <TextInput placeholder="Nome do País" value={state.name} onChangeText={(value) => changeText('name', value)}/>
+            <TextInput placeholder="Nome do País" value={anotation.name} onChangeText={(value) => changeText('name', value)}/>
         </View>
         <View style={styles.inputGroup}>
-            <TextInput placeholder="Descrição" value={state.description} onChangeText={(value) => changeText('description', value)}/>
+            <TextInput placeholder="Descrição" value={anotation.description} onChangeText={(value) => changeText('description', value)}/>
         </View>
         <View>
-            <Button color="#19AC52" title="Atualizar" onPress={() => alert('Item Atualizado')}/>
+            <Button color="#19AC52" title="Salvar" onPress={() => alert('Item Atualizado')}/>
         </View>
         <View>
             <Button color="#E31030" title="Deletar" onPress={() => openConfirmationAlert()}/>
